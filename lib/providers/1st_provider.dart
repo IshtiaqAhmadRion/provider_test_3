@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-class userDetails with ChangeNotifier {
+class UserDetails with ChangeNotifier {
  
 }
