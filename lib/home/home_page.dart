@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:provider_test_3/providers/1st_provider.dart';
+import 'package:provider_test_3/second_screen/second_screen.dart';
 
 class FirstPage extends StatefulWidget {
+  static const routeName = '/Home';
   FirstPage({Key? key}) : super(key: key);
 
   @override
@@ -9,8 +13,12 @@ class FirstPage extends StatefulWidget {
 
 class _FirstPageState extends State<FirstPage> {
   final nameKey = GlobalKey<FormState>();
+  final phoneKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final numberController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final providerData = Provider.of<UserDetails>(context);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.purple,
@@ -21,49 +29,67 @@ class _FirstPageState extends State<FirstPage> {
             ),
           ),
         ),
-        body: Column(
-          children: [
-            Form(
-              key: nameKey,
-              child: TextFormField(
-                decoration:
-                InputDecoration(
-                  hintText: 'Your Name',
-                  icon: Icon(Icons.person),
-                  labelText: 'Name*'),
-                validator: (String? value) {
-                  return (value != null && value.contains('@'))
-                      ? 'Do not use the @ char.'
-                      : null;
-                },
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              //Name From
+              Form(
+                key: nameKey,
+                child: TextFormField(
+                  //controller: nameController,
+
+                  keyboardType: TextInputType.name,
+                  decoration: InputDecoration(
+                      hintText: 'Your Name',
+                      icon: Icon(Icons.person),
+                      labelText: 'Name*'),
+                  validator: (String? value) {
+                    return (value != null && value.contains('@'))
+                        ? 'Do not use the @ char.'
+                        : null;
+                  },
+                  onChanged: (text) {
+                    providerData.name = text.toString();
+                  },
+                ),
               ),
-            ),
-            SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
+              Form(
+                key: phoneKey,
+                child: TextFormField(
+                  controller: numberController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                      hintText: 'Please Enter Your Phone Number ',
+                      icon: Icon(Icons.phone),
+                      labelText: 'Phone Number*'),
+                  validator: (String? value) {
+                    return (value != null && value.contains('@'))
+                        ? 'Do not use the @ char.'
+                        : null;
+                  },
+                  onChanged: (num) {
+                    providerData.number = int.parse(num);
+                  },
+                ),
+              ),
 
-            // ignore: deprecated_member_use
-            RaisedButton(
-              child: Text("Submit"),
-              onPressed: () {
-              nameKey.currentState!.validate();
-            })
+              SizedBox(
+                height: 20,
+              ),
 
-            // TextFormField(
-            //   decoration: const InputDecoration(
-            //     icon: Icon(Icons.person),
-            //     hintText: 'What do people call you?',
-            //     labelText: 'Name *',
-            //   ),
-            //   onSaved: (String? value) {
-            //     // This optional block of code can be used to run
-            //     // code when the user saves the form.
-            //   },
-            //   validator: (String? value) {
-            //     return (value != null && value.contains('@'))
-            //         ? 'Do not use the @ char.'
-            //         : null;
-            //   },
-            // )
-          ],
+              // ignore: deprecated_member_use
+              RaisedButton(
+                  child: Text("Submit"),
+                  onPressed: () {
+                    nameKey.currentState!.validate();
+                    Navigator.pushNamed(context, (SecondScreen.routeName));
+                  })
+            ],
+          ),
         ));
   }
 }
