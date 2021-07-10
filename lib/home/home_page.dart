@@ -14,8 +14,7 @@ class FirstPage extends StatefulWidget {
 class _FirstPageState extends State<FirstPage> {
   final nameKey = GlobalKey<FormState>();
   final phoneKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final numberController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final providerData = Provider.of<UserDetails>(context);
@@ -37,8 +36,6 @@ class _FirstPageState extends State<FirstPage> {
               Form(
                 key: nameKey,
                 child: TextFormField(
-                  //controller: nameController,
-
                   keyboardType: TextInputType.name,
                   decoration: InputDecoration(
                       hintText: 'Your Name',
@@ -57,10 +54,11 @@ class _FirstPageState extends State<FirstPage> {
               SizedBox(
                 height: 20,
               ),
+
+              //Numer  from field
               Form(
                 key: phoneKey,
                 child: TextFormField(
-                  controller: numberController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       hintText: 'Please Enter Your Phone Number ',
@@ -80,6 +78,8 @@ class _FirstPageState extends State<FirstPage> {
               SizedBox(
                 height: 20,
               ),
+              
+              //Submit button
 
               // ignore: deprecated_member_use
               RaisedButton(
