@@ -15,7 +15,7 @@ class SecondScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.purple,
         title: Text(
-          'SECOND SCREEN',
+          data.name,
           style: TextStyle(
             color: Colors.white,
           ),
